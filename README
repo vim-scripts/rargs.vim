@@ -1,0 +1,72 @@
+This is a mirror of http://www.vim.org/scripts/script.php?script_id=2789
+
+':RArgs' command that this plugin defined can read
+selected files contents at one time.
+( like :read command, but for multiple files. )
+
+
+------------------------------------------------------------------------------
+[command format]
+
+" read {filename1}, {filename2}, and {filename3},
+" contents are inserted into N.
+:[N]RArgs [++opt] {filename1} [{filename2} {filename3}...]
+
+[N]
+    contents read are inserted into the specified line,
+    or not specify line, contents are inserted into cursor position.
+
+[++opt]
+    file reading option.
+    see ':help ++opt', for more information.
+
+{filename1} [{filename2} {filename3}...]
+    filepath list.
+
+
+------------------------------------------------------------------------------
+[filepath parameters]
+
+" read sample1.txt, sample2.txt, and sample3.txt
+:RArgs sample1.txt sample2.txt sample3.txt
+
+" wildcards are allowed
+:RArgs sample*
+
+" Vim special keywords are allowed
+:RArgs #2 #4 #6<.bak
+
+" reading the file at multiple times are allowed
+:RArgs sample1.txt sample1.txt sample1.txt
+
+" file encoding, file format
+:RArgs ++enc=utf-8 ++ff=unix sample1.txt sample2.txt sample3.txt
+
+
+------------------------------------------------------------------------------
+[inserting file position]
+
+If you do not specify line number,
+the contents of selected files are inserted into cursor line.
+
+" contents are inserted into cursor line.
+:RArgs sample1.txt sample2.txt sample3.txt
+
+" contents are inserted into specified line.
+:200RArgs sample1.txt sample2.txt sample3.txt
+
+" contents are inserted into first line of buffer.
+:0RArgs sample1.txt sample2.txt sample3.txt
+
+
+------------------------------------------------------------------------------
+[Configuration]
+
+'g:rargs_exit_when_error'
+
+If you set 1 to 'g:rargs_exit_when_error',
+exit when error is found. Default aciion is error is ignored.
+
+let g:rargs_exit_when_error = '1'
+
+
